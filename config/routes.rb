@@ -1,4 +1,6 @@
 Lookupgit::Application.routes.draw do
+
+  match '/foo', to: 'application#foo'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
