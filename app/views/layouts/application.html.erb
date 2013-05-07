@@ -2,13 +2,97 @@
 <html>
 <head>
   <title>Lookupgit</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Josefin+Slab">
   <%= csrf_meta_tags %>
+  <script>
+      DEBUG = false;
+  </script>
 </head>
 <body>
 
 <%= yield %>
+<div>
+  <script>
+      function search() {
+          var kw = $('#queryWord').val();
+          //$('#queryWord').val('');
+          //$('#goButton').attr("disabled", "disabled");
+          if (DEBUG) alert(kw);
 
+          if (kw.length > 0) {
+              $.ajax({
+                  url: "/lookup.json",
+                  type: "POST",
+                  dataType: "json",
+                  data: {
+                      keyword: kw
+                  },
+                  success: function (json) {
+                      if (DEBUG)
+                          alert(JSON.stringify(json));
+                      users = json["users"];
+
+                      $('#result').empty();
+                      for (user in json["users"]) {
+                          $('#result').append('<div id="user" onclick="expand(this);">' + formUser(users[user]) + '</div>');
+                      }
+                      //$('#goButton').removeAttr("disabled");
+
+                  },
+                  error: function (v) {
+                      if (DEBUG) {
+                          alert("Error Occured!");
+                      }
+                      //$('#goButton').removeAttr("disabled");
+                  }
+
+              });
+          } else {
+              if (DEBUG) {
+                  alert("Keyword length must be > 0")
+              }
+          }
+          //$('#goButton').removeAttr("disabled");
+      }
+      function expand(node) {
+          var jqe = jQuery(node);
+          jqe.collapseHeight = jqe.height();
+          jqe.css('height', 'auto');
+          jqe.totalHeight = jqe.height();
+          jqe.removeAttr('style');
+
+          jqe.hover(function () {
+              jqe.stop().animate({height: jqe.totalHeight}, 500);
+          }, function () {
+              jqe.stop().animate({height: jqe.collapseHeight}, 500);
+          });
+      }
+      /**
+       Customized only of Github API... Will definitly not work for others
+       */
+      function formUser(userJson) {
+          return '<img src="http://www.gravatar.com/avatar/' + userJson.gravatar_id + '">' +
+                  '<div id="user-info"><div id="name">' + userJson.name + '</div>' + '<div id="username"><a href="https://github.com/' + userJson.username + '">' + userJson.username + '</a></div></div>' +
+                  '<div id="more-data">' + JSON.stringify(userJson) + '</div>';
+      }
+
+  </script>
+  <center>
+    <div id="caption">
+      Search for skills on Github
+    </div>
+    <table>
+      <tr>
+        <td><input type="text" id="queryWord" name="keyword" placeholder="Search for people..."></td>
+        <td><input type="button" value="Search" onclick="search();" id="goButton"></td>
+      </tr>
+    </table>
+  </center>
+</div>
+
+<div id="result">
+</div>
 </body>
 </html>

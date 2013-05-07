@@ -10,4 +10,94 @@
  *
  *= require_self
  *= require_tree .
+
  */
+#caption {
+    font-family: 'Josefin Slab', serif;
+    font-size: 48px;
+    color: #8b8a81;
+}
+body {
+    background: #181816;
+}
+#goButton {
+    min-height: 36px;
+    min-width: 36px;
+    background: #0c537c;
+    border: none;
+    color: #171713;
+    cursor: pointer;
+}
+#goButton:hover {
+    background: #0c7ebb;
+}
+#goButton:active {
+    background: #0c3554;
+}
+#queryWord{
+    width: 480px;
+    border: solid 1px #46453e;
+    padding: 8px;
+    font-size: 16px;
+    background: #41413e;
+}
+#queryWord:hover{
+    background: #6a6a66;
+}
+#queryWord:focus {
+    background: #8b8a81;
+}
+#result {
+    position: relative;
+    /*border: solid;*/
+    width: 720px;
+    margin-top: 24px;
+    margin-left:auto;
+    margin-right:auto;
+}
+#user {
+    background: #41413e;
+    position: relative;
+    /*margin: 16px;/*/
+    padding: 8px;
+    width: 700px;
+    border-bottom: solid 1px #62615a;
+    height: 100px;
+    overflow: hidden;
+}
+#user #more-data {
+    margin-top: 8px;
+    font: "Courier";
+    font-size: 13px;;
+    word-wrap: break-word;
+    padding: 16px;
+    background: #41413e;
+    color: #d6d5cb;
+}
+#user #user-info {
+    position: relative;
+    /*border: solid 1px;*/
+    left: 96px;
+    margin-top: -86px;
+    width: 600px;
+    text-overflow: ellipsis;
+    /*float: right;*/
+}
+
+#user #user-info #name {
+    font-size: 4em;
+    color: #8b8a81;
+    text-shadow: 0px -1px 0px rgba(0,0,0,.5); /* 50% black coming from the top */
+}
+#user #user-info #username {
+    font-size: 1.6em;
+    font-style: italic;
+    color: #d6d5cb;
+}
+#user #user-info #username a {
+    text-decoration: none;
+    color: #6f6e65;
+}
+#user #user-info #username a:hover {
+    text-decoration: underline;
+}
