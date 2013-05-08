@@ -15,6 +15,14 @@
 <%= yield %>
 <div>
   <script>
+      jQuery.fn.center = function () {
+          this.css("position", "absolute");
+          this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                  $(window).scrollTop()) + "px");
+          this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                  $(window).scrollLeft()) + "px");
+          return this;
+      }
       function search() {
           var kw = $('#queryWord').val();
           //$('#queryWord').val('');
@@ -36,7 +44,9 @@
 
                       $('#result').empty();
                       for (user in json["users"]) {
-                          $('#result').append('<div id="user" onclick="expand(this);">' + formUser(users[user]) + '</div>');
+
+                          name = "" + users[user].username;
+                          $('#result').append('<div id="user" onclick="getDetails(this);" class="' + name + '">' + formUser(users[user]) + '<div id="more-info"></div></div>');
                       }
                       //$('#goButton').removeAttr("disabled");
 
@@ -56,6 +66,61 @@
           }
           //$('#goButton').removeAttr("disabled");
       }
+      function formRepo(str) {
+          //alert(str);
+          var repos = str.github_repos;
+          var reposHtml = "";
+          for (i in repos) {
+              //alert(i);
+              var repo = repos[i];
+              rd = '<div id="repo">' +
+                      '<div id="title"><a href="' + repo.url + '">' + repo.name + "</a></div>" +
+                      '<p>' + repo.description + '</p>' +
+                      '<table>' +
+                      '<tr><td>Language </td><td>' + (repo.language == null ? "Not Specified" : repo.language) + '</td></tr>' +
+                      '<tr><td>Contributors</td><td> ' + repo.contributors_count + '</td></tr>' +
+                      '<tr><td>Collaborators</td><td> ' + repo.collaborators_count + '</td></tr>' +
+                      '<tr><td>Watchers</td><td> ' + repo.watchers + '</td></tr>' +
+                      '<tr><td>Forks</td><td> ' + repo.forks + '</td></tr>' +
+                      '<tr><td>Homepage</td><td> ' + repo.homepage + '</td></tr>' +
+                      '<tr><td>Score</td><td>' + repo.score + '</td></tr>' +
+                      '</table>' +
+                      '</div>';
+              reposHtml += rd;
+          }
+          alert(reposHtml);
+
+          return reposHtml;
+      }
+      function getDetails(node) {
+          jqn = jQuery(node);
+          //if (jQuery.data(jqn, "d").a != null) return;
+          un = jqn.attr("class");
+          $.ajax({
+              url: "/details.json?u=" + un,
+              type: "GET",
+              dataType: "json",
+              success: function (json) {
+                  //var str = JSON.stringify(json);
+                  var userNode = $('.' + un);
+                  $('.' + un + " #more-info").html(formRepo(json));
+                  userNode.collapseHeight = userNode.height();
+                  userNode.css('height', 'auto');
+                  userNode.totalHeight = userNode.height();
+                  userNode.removeAttr('style');
+
+                  userNode.hover(function () {
+                      userNode.stop().animate({height: userNode.totalHeight}, 500);
+                  }, function () {
+                      userNode.stop().animate({height: userNode.collapseHeight}, 500);
+                  });
+                  jqn.attr('onclick', '').unbind("click");
+              },
+              error: function (v) {
+
+              }
+          });
+      }
       function expand(node) {
           var jqe = jQuery(node);
           jqe.collapseHeight = jqe.height();
@@ -74,8 +139,7 @@
        */
       function formUser(userJson) {
           return '<img src="http://www.gravatar.com/avatar/' + userJson.gravatar_id + '">' +
-                  '<div id="user-info"><div id="name">' + userJson.name + '</div>' + '<div id="username"><a href="https://github.com/' + userJson.username + '">' + userJson.username + '</a></div></div>' +
-                  '<div id="more-data">' + JSON.stringify(userJson) + '</div>';
+                  '<div id="user-info"><div id="name">' + userJson.name + '</div>' + '<div id="username"><a href="https://github.com/' + userJson.username + '">' + userJson.username + '</a></div></div>';
       }
 
   </script>
@@ -91,7 +155,10 @@
     </table>
   </center>
 </div>
-
+<div id="mydialog" title="Basic dialog">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and
+    closed with the 'x' icon.</p>
+</div>
 <div id="result">
 </div>
 </body>
