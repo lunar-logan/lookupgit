@@ -1,5 +1,8 @@
 Lookupgit::Application.routes.draw do
 
+  resources :searches
+
+
   match '/foo', to: 'application#foo'
   match '/lookup', to: 'application#lookup'
   match '/details', to: 'application#details'

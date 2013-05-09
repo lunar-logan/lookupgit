@@ -82,13 +82,16 @@
                       '<tr><td>Collaborators</td><td> ' + repo.collaborators_count + '</td></tr>' +
                       '<tr><td>Watchers</td><td> ' + repo.watchers + '</td></tr>' +
                       '<tr><td>Forks</td><td> ' + repo.forks + '</td></tr>' +
-                      '<tr><td>Homepage</td><td> ' + repo.homepage + '</td></tr>' +
-                      '<tr><td>Score</td><td>' + repo.score + '</td></tr>' +
+                      '<tr><td>Homepage</td><td><a href="' + repo.homepage + '">' + repo.homepage + '</a></td></tr>' +
+                      '<tr><td>X-Score</td><td>' + repo.score + '</td></tr>' +
                       '</table>' +
                       '</div>';
               reposHtml += rd;
           }
           alert(reposHtml);
+          if(reposHtml === "") {
+              reposHtml = '<div id="repo">OOps! It seems that this user has not yet created any repository on github</div>';
+          }
 
           return reposHtml;
       }

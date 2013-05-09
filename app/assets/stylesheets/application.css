@@ -137,6 +137,7 @@ body {
 }
 
 #more-info #repo {
+    font-family: 'Josefin Slab', serif;
     background: #181816;
     border-radius: 4px;
     border: solid 1px #181816;
@@ -162,17 +163,26 @@ body {
 
 #more-info #repo p {
     font-family: 'Josefin Slab', serif;
-    font-style: italic;
+    /*font-style: italic;*/
     font-size: 14px;
     color: #62615a;
 }
+#more-info #repo a {
+    color: brown;
+    text-decoration: none;
+}
+#more-info #repo a:hover {
+    text-decoration: underline;
+}
 #more-info #repo table, td, tr
 {
+    font-family: 'Josefin Slab', serif;
     border:none;
     color: #d6d5cb;
 }
 #more-info #repo tr
 {
+    font-family: 'Josefin Slab', serif;
     /*background-color:#41413e;*/
     padding: 8px;
     color: #d6d5cb;
