@@ -1,5 +1,8 @@
 Lookupgit::Application.routes.draw do
 
+  resources :repos
+
+
   resources :searches
 
 
