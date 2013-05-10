@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2847270839">
+  <component name="DataSourceManagerImpl" format="xml" hash="3163487356">
     <data-source source="LOCAL" name="Data Source" product="SQLite" version="3.6.3" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native" uuid="84a0df42-7b9c-464d-aa21-0f117525b0eb">
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>

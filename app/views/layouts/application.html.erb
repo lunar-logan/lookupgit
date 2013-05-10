@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Josefin+Slab">
   <%= csrf_meta_tags %>
   <script>
-      DEBUG = false;
+      DEBUG = true;
   </script>
 </head>
 <body>
@@ -39,7 +39,7 @@
                   },
                   success: function (json) {
                       if (DEBUG)
-                          alert(JSON.stringify(json));
+                          alert("Systme Responded Successfully with :" + JSON.stringify(json));
                       users = json["users"];
 
                       $('#result').empty();
@@ -54,6 +54,8 @@
                   error: function (v) {
                       if (DEBUG) {
                           alert("Error Occured!");
+                          console.log(JSON.stringify(v));
+                          console.log(v);
                       }
                       //$('#goButton').removeAttr("disabled");
                   }
@@ -99,6 +101,7 @@
           jqn = jQuery(node);
           //if (jQuery.data(jqn, "d").a != null) return;
           un = jqn.attr("class");
+
           $.ajax({
               url: "/details.json?u=" + un,
               type: "GET",
